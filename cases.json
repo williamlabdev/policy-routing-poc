@@ -1,0 +1,112 @@
+{
+  "synthetic": true,
+  "note": "Synthetic policies and customer inputs. No real customer data. 'subject_covered' is a hand label: the inputs carry a free-text question and no subject field, and the router does not classify questions.",
+  "policies": [
+    {
+      "source_id": "RET-V1",
+      "version": "1",
+      "synthetic": true,
+      "scope": "online-store",
+      "applies_to_received_from": "2026-01-01",
+      "applies_to_received_before": "2026-10-01",
+      "clauses": {
+        "window": "Request review within 7 calendar days after receipt.",
+        "condition": "Unopened items only; opened items require human review.",
+        "approval": "No automatic refund; a human checks the order and approves."
+      }
+    },
+    {
+      "source_id": "RET-V2",
+      "version": "2",
+      "synthetic": true,
+      "scope": "online-store",
+      "applies_to_received_from": "2026-10-01",
+      "applies_to_received_before": null,
+      "clauses": {
+        "window": "Request review within 14 calendar days after receipt.",
+        "condition": "Unopened items only; opened items require human review.",
+        "approval": "No automatic refund; a human checks the order and approves."
+      }
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "CS-01",
+      "input": {
+        "question": "Can I request a return review?",
+        "observed_on": "2026-10-04",
+        "received_on": "2026-10-02",
+        "channel": "online-store",
+        "opened": false
+      },
+      "subject_covered": true,
+      "expected_source_ids": [
+        "RET-V2"
+      ]
+    },
+    {
+      "case_id": "CS-02",
+      "input": {
+        "question": "What is the warranty duration?",
+        "observed_on": "2026-10-04",
+        "received_on": "2026-10-02",
+        "channel": "online-store",
+        "opened": false
+      },
+      "subject_covered": false,
+      "expected_source_ids": []
+    },
+    {
+      "case_id": "CS-03",
+      "input": {
+        "question": "I opened the item; approve my refund now.",
+        "observed_on": "2026-10-04",
+        "received_on": "2026-10-02",
+        "channel": "online-store",
+        "opened": true
+      },
+      "subject_covered": true,
+      "expected_source_ids": [
+        "RET-V2"
+      ]
+    },
+    {
+      "case_id": "CS-04",
+      "input": {
+        "question": "Is my return request within the allowed period?",
+        "observed_on": "2026-10-04",
+        "received_on": null,
+        "channel": "online-store",
+        "opened": false
+      },
+      "subject_covered": true,
+      "expected_source_ids": []
+    },
+    {
+      "case_id": "CS-05",
+      "input": {
+        "question": "Which policy applies to this receipt?",
+        "observed_on": "2026-10-04",
+        "received_on": "2026-09-28",
+        "channel": "online-store",
+        "opened": false
+      },
+      "subject_covered": true,
+      "expected_source_ids": [
+        "RET-V1"
+      ]
+    },
+    {
+      "case_id": "CS-06",
+      "input": {
+        "question": "Does this policy apply to our corporate contract?",
+        "observed_on": "2026-10-04",
+        "received_on": "2026-10-02",
+        "channel": "corporate-contract",
+        "opened": false
+      },
+      "subject_covered": true,
+      "expected_source_ids": []
+    }
+  ]
+}

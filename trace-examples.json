@@ -1,0 +1,138 @@
+{
+  "artifact": "synthetic deterministic policy-routing display examples",
+  "provenance": "Actual calls to policy_router.resolve_policy; no LLM or customer data.",
+  "source_path": "cases.json",
+  "source_sha256": "17a44e2f140e753852a68f3ee7a3d6711f11c11a6eb1c2770c91d4ff93cc0e67",
+  "router_path": "policy_router.py",
+  "router_sha256": "676e971168c9a00de3fea798fec773fb532f26dcbfdbc819ae89521e70726961",
+  "generator_path": "capture_examples.py",
+  "generator_sha256": "7dafba1dddc5a72ad0b20f2a9efd75dc793b951713f36bc19565913f606abe02",
+  "scope": "Synthetic RET-V1/RET-V2 intervals only; upstream subject_covered is supplied, not inferred.",
+  "records": [
+    {
+      "case": {
+        "id": "BOUNDARY-2026-09-30",
+        "description": "Day before RET-V2 starts; RET-V1 end is exclusive.",
+        "subject_covered": true,
+        "channel": "online-store",
+        "received_on": "2026-09-30",
+        "observed_on": "2026-10-04"
+      },
+      "router_result": {
+        "status": "selected",
+        "selected_version": "RET-V1",
+        "source_ids": [
+          "RET-V1"
+        ],
+        "missing_fields": [],
+        "reason": "Exactly one channel and date interval matches."
+      }
+    },
+    {
+      "case": {
+        "id": "BOUNDARY-2026-10-01",
+        "description": "RET-V2 start date is inclusive.",
+        "subject_covered": true,
+        "channel": "online-store",
+        "received_on": "2026-10-01",
+        "observed_on": "2026-10-04"
+      },
+      "router_result": {
+        "status": "selected",
+        "selected_version": "RET-V2",
+        "source_ids": [
+          "RET-V2"
+        ],
+        "missing_fields": [],
+        "reason": "Exactly one channel and date interval matches."
+      }
+    },
+    {
+      "case": {
+        "id": "CS-04-MISSING-DATE",
+        "description": "Missing receipt date must not choose the newest policy.",
+        "subject_covered": true,
+        "channel": "online-store",
+        "received_on": null,
+        "observed_on": "2026-10-04"
+      },
+      "router_result": {
+        "status": "receipt_date_missing",
+        "selected_version": null,
+        "source_ids": [],
+        "missing_fields": [
+          "received_on"
+        ],
+        "reason": "Receipt date is absent."
+      }
+    },
+    {
+      "case": {
+        "id": "CS-06-UNSUPPORTED-CHANNEL",
+        "description": "Corporate-contract channel is outside both online-store policies.",
+        "subject_covered": true,
+        "channel": "corporate-contract",
+        "received_on": "2026-10-02",
+        "observed_on": "2026-10-04"
+      },
+      "router_result": {
+        "status": "channel_unsupported",
+        "selected_version": null,
+        "source_ids": [],
+        "missing_fields": [],
+        "reason": "No policy covers this channel."
+      }
+    },
+    {
+      "case": {
+        "id": "CS-02-UNSUPPORTED-SUBJECT",
+        "description": "Warranty question is outside the return-policy subject gate.",
+        "subject_covered": false,
+        "channel": "online-store",
+        "received_on": "2026-10-02",
+        "observed_on": "2026-10-04"
+      },
+      "router_result": {
+        "status": "subject_not_covered",
+        "selected_version": null,
+        "source_ids": [],
+        "missing_fields": [],
+        "reason": "No policy selection: subject gate is false."
+      }
+    },
+    {
+      "case": {
+        "id": "GAP-BEFORE-RET-V1",
+        "description": "Date before all supplied policy intervals has no selected source.",
+        "subject_covered": true,
+        "channel": "online-store",
+        "received_on": "2025-12-31",
+        "observed_on": "2026-10-04"
+      },
+      "router_result": {
+        "status": "no_valid_policy",
+        "selected_version": null,
+        "source_ids": [],
+        "missing_fields": [],
+        "reason": "Receipt date is outside all policy validity intervals."
+      }
+    },
+    {
+      "case": {
+        "id": "FUTURE-RECEIPT-DATE",
+        "description": "Receipt date later than observation date fails closed.",
+        "subject_covered": true,
+        "channel": "online-store",
+        "received_on": "2026-10-05",
+        "observed_on": "2026-10-04"
+      },
+      "router_result": {
+        "status": "receipt_date_in_future",
+        "selected_version": null,
+        "source_ids": [],
+        "missing_fields": [],
+        "reason": "Receipt date is later than the observation date."
+      }
+    }
+  ]
+}
