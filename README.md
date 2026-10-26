@@ -30,7 +30,7 @@ python3 capture_examples.py
 
 The selector assumes `subject_covered` has already been established by an upstream trusted workflow or reviewed classification. It does not infer intent from free text, resolve legal meaning, calculate eligibility from a duration clause, write a reply, or execute a refund. Missing dates, unsupported channels/subjects, future dates, and gaps return no selected policy. Intervals are start-inclusive and end-exclusive; overlap fails closed. A date that is not a canonical `YYYY-MM-DD` string raises `ValueError` instead of returning a status.
 
-The case inputs have a free-text question and no subject field. In `cases.json`, `subject_covered` is `false` for CS-02 (a warranty question) because it was set by hand. The router does not decide that.
+The case inputs have a free-text question and no subject field. In `cases.json`, `subject_covered` was set by hand for all six cases. It is `false` for CS-02 (a warranty question). Marking CS-06 (a corporate-contract question) as covered is arguable; the router stops CS-06 on the channel either way. The router does not decide any of this.
 
 The router was written after the six model failures had been seen, so the six cases matching is a consistency check, not held-out evidence.
 

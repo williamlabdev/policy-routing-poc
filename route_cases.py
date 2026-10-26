@@ -48,7 +48,7 @@ def main() -> int:
         print(f"| {case['case_id']} | {shown} | {', '.join(expected) or 'none'} | {'yes' if match else 'NO'} |")
     print()
     print(f"{len(data['cases']) - mismatches}/{len(data['cases'])} match the expected source written before the model run.")
-    print("CS-02's subject_covered=false is a hand label, not something the router decided.")
+    print("subject_covered is a hand label for all six cases, not something the router decided.")
     return 1 if mismatches else 0
 
 
